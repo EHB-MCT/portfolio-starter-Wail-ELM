@@ -24,3 +24,39 @@ app.post('/movies', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
 });
+
+/**
+* Update via ID
+ * @route 
+ * @param {number} id.path 
+ * @param {Movie.model} movie.body 
+ * @returns {Movie.model} 
+ */
+app.put('/movies/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const updatedMovie = req.body;
+  
+  /
+  const index = movies.findIndex(movie => movie.id === id);
+
+ -
+  if (index !== -1) {
+    movies[index] = { ...movies[index], ...updatedMovie };
+    res.json(movies[index]);
+  } else {
+    res.status(404).json({ error: 'Movie not found' });
+  }
+});
+
+/**
+ * 
+ * @route
+ * @param {number} id.path 
+ * @returns {object} 
+ */
+app.delete('/movies/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  movies = movies.filter(movie => movie.id !== id);
+  res.status(204).send();
+});
+
